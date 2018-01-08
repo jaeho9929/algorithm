@@ -57,31 +57,31 @@ int maxSum2(const std::vector<int>& A)
 	return ret;
 }
 
-//int maxSum3(const std::vector<int>& A, int lo, int hi)
-//{
-//	if(lo == hi)
-//		return A[lo];
-//
-//	int mid = (lo + hi) / 2;
-//
-//	int left = MIN, right = MIN, sum = 0;
-//
-//	for(int i = mid; i >= lo; --i){
-//		sum += A[i];
-//		left = std::max(left, sum);
-//	}
-//
-//	sum = 0;
-//
-//	for(int j = mid + 1; j <= hi; ++j){
-//		sum += A[j];
-//		right = std::max(right, sum);
-//	}
-//
-//	int single = std::max(maxSum3(A, lo, mid), maxSum3(A, mid+1, hi));
-//
-//	return std::max(left + right, single);
-//}
+int maxSum3(const std::vector<int>& A, int lo, int hi)
+{
+	if(lo == hi)
+		return A[lo];
+
+	int mid = (lo + hi) / 2;
+
+	int left = MIN, right = MIN, sum = 0;
+
+	for(int i = mid; i >= lo; --i){
+		sum += A[i];
+		left = std::max(left, sum);
+	}
+
+	sum = 0;
+
+	for(int j = mid + 1; j <= hi; ++j){
+		sum += A[j];
+		right = std::max(right, sum);
+	}
+
+	int single = std::max(maxSum3(A, lo, mid), maxSum3(A, mid+1, hi));
+
+	return std::max(left + right, single);
+}
 
 int maxSum4(const std::vector<int>& A)
 {
@@ -120,7 +120,7 @@ int main(void)
     std::cout << std::endl;
 	__TIMEMEASURE(maxSum1, testCase);
 	__TIMEMEASURE(maxSum2, testCase);
-//	__TIMEMEASURE3(maxSum3, testCase, 0, testCase[testCase.size() - 1]);
+	__TIMEMEASURE3(maxSum3, testCase, 0, testCase.size() - 1);
 	__TIMEMEASURE(maxSum4, testCase);
 	
 	return 0;
