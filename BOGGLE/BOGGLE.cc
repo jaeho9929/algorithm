@@ -7,6 +7,9 @@
 #include <cassert>
 
 #define TEST_SIZE       1000
+
+#define PRINT_PATH
+
 #define __MESSAGE(s)    \
     std::cout << s << std::endl;
 
@@ -35,15 +38,21 @@ bool hasWord(int y, int x, const std::string& word, std::vector<std::string> boa
         return false;
 
     if(word.size() == 1){
+#ifdef PRINT_PATH
         std::cout << "At point (x, y) = " << "(" << x << ", " << y << ")" << std::endl;
+#endif
         return true;
     }
 
     for(int dx = -1; dx <= 1; ++dx){
         for(int dy = -1; dy <= 1; ++dy){
+#ifdef PRINT_PATH
             std::cout << "Finding (x, y) = " << "(" << x + dx << ", " << y + dy << ")" << std::endl;
+#endif
             if((dx || dy) && hasWord(y + dy, x + dx, word.substr(1), board)){
+#ifdef PRINT_PATH
                 std::cout << "At point (x, y) = " << "(" << x << ", " << y << ")" << std::endl;
+#endif
                 return true;
             }
         }
