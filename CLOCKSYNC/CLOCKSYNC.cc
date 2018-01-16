@@ -29,7 +29,9 @@ using namespace std;
     duration = std::chrono::duration_cast<std::chrono::microseconds>(te - ts).count();    \
     std::cout << "Execution time of "<< #func " " << "; " << duration << "us" << std::endl;   
 
-int clockSwitch[10][15] = {
+const int INF = 9999;
+
+int clockSwitch[10][16] = {
     {1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
     {0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0},
     {0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 1},
@@ -41,6 +43,33 @@ int clockSwitch[10][15] = {
     {0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
     {0, 0, 0, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0},
     };
+
+bool areAligned(const vector<int>& clocks)
+{
+    for(int i = 0; i < 16; i++){
+        if((clocks[i] % 4) != 0)
+            return false;
+    }
+    return true;
+}
+
+void pushBtn(vector<int>& clocks, int swtch){
+    for(int clock = 0; clock < 16; ++ clock)
+        if(clockSwitch[swtch][clock] == 1){
+            clocks[clock] += 3;
+        }
+}
+
+int solve(vector<int>& clocks, int swtch){
+    if(swtch == 10)
+        return areAligned(clocks) ? 0 : INF;
+    int ret = INF;
+    for(int cnt = 0; cnt < 4; ++cnt){
+        ret = min(ret, cnt + solve(clocks, swtch + 1));
+        pushBtn(clocks, swtch);
+    }
+    return ret;
+}
 
 int main(void)
 {
@@ -61,8 +90,9 @@ int main(void)
             cin >> clock;
             assert((clock == 3) | (clock == 6) | (clock == 9) | (clock == 12));
             clocks.push_back(clock);
-            cout << clocks[i] << endl;
         }
+        int ret = solve(clocks, 0);
+        cout << (ret >= INF ? -1 : ret) << endl;
         clocks.clear();
 //        __TIMEMEASURE();
     }
