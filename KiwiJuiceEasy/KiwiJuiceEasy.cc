@@ -37,7 +37,7 @@ class KiwiJuiceEasy{
                 if(bottles[toId[i]] == capacities[toId[i]]) continue;
                 if((bottles[fromId[i]] + bottles[toId[i]]) > capacities[toId[i]]){
                     bottles[fromId[i]] -= (capacities[toId[i]] - bottles[toId[i]]);
-                    bottles[toId[i]] = capacities[i];
+                    bottles[toId[i]] = capacities[toId[i]];
                 }else{
                     bottles[toId[i]] += bottles[fromId[i]];
                     bottles[fromId[i]] = 0;
