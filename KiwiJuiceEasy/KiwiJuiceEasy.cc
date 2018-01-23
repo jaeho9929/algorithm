@@ -27,6 +27,13 @@ using namespace std;
     duration = std::chrono::duration_cast<std::chrono::microseconds>(te - ts).count();    \
     std::cout << "Execution time of "<< #func " " << "; " << duration << "us" << std::endl;
 
+#define __TIMEMEASURE_WITHRETURN(ret ,func, ...)      \
+    ts = std::chrono::high_resolution_clock::now();   \
+    ret = func(__VA_ARGS__);  \
+    te = std::chrono::high_resolution_clock::now();   \
+    duration = std::chrono::duration_cast<std::chrono::microseconds>(te - ts).count();    \
+    std::cout << "Execution time of "<< #func " " << "; " << duration << "us" << std::endl;
+
 class KiwiJuiceEasy{
     public:
         vector<int> thePouring(vector<int> capacities,
@@ -90,7 +97,8 @@ int main(void)
             toId.push_back(tmp);
         }
         
-        returns = solver.thePouring(capacities, bottles, fromId, toId);
+        //returns = solver.thePouring(capacities, bottles, fromId, toId);
+        __TIMEMEASURE_WITHRETURN(returns ,solver.thePouring, capacities, bottles, fromId, toId);
         cout << "CASE \"" << cc << "\"" << endl;
         for(int i = 0; i < returns.size(); i++)
             cout << returns[i] << " ";
