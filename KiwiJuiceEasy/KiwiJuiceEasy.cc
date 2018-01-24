@@ -38,8 +38,7 @@ class KiwiJuiceEasy{
     public:
         vector<int> thePouring(vector<int> capacities,
                                 vector<int> bottles,
-                                vector<int> fromId, vector<int> toId)
-        {
+                                vector<int> fromId, vector<int> toId){
             for(int i = 0; i < toId.size(); i++){
                 if(bottles[toId[i]] == capacities[toId[i]]) continue;
                 if((bottles[fromId[i]] + bottles[toId[i]]) > capacities[toId[i]]){
@@ -55,6 +54,21 @@ class KiwiJuiceEasy{
 //            cout << endl;
             return bottles;
         }
+        vector<int> thePouring2(vector<int> capacities,
+                                vector<int> bottles,
+                                vector<int> fromId, vector<int> toId){
+            for(int i = 0; i < fromId.size(); i++){
+                int f = fromId[i];
+                int t = toId[i];
+
+                int vol = min(bottles[f], capacities[t] - bottles[t]);
+
+                bottles[f] -= vol;
+                bottles[t] += vol;
+            }
+            return bottles;
+        }
+
 };
 
 int main(void)
@@ -99,6 +113,7 @@ int main(void)
         
         //returns = solver.thePouring(capacities, bottles, fromId, toId);
         __TIMEMEASURE_WITHRETURN(returns ,solver.thePouring, capacities, bottles, fromId, toId);
+        __TIMEMEASURE_WITHRETURN(returns ,solver.thePouring2, capacities, bottles, fromId, toId);
         cout << "CASE \"" << cc << "\"" << endl;
         for(int i = 0; i < returns.size(); i++)
             cout << returns[i] << " ";
