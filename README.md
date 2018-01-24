@@ -12,4 +12,6 @@ GNU Make 4.1 (Built for x86_64-pc-linux-gnu)
 Reference Book
 ---------------------------------
 [Algorithmic Problem Solving Strategies](https://goo.gl/9gEUa3), Jong Man Koo, Insight, ISBN 978-89-6626-054-6.  
-And source examples from [here](http://book.algospot.com/src.html).
+And source examples from [here](http://book.algospot.com/src.html).  
+[Saikyou Saisoku Algorithmer Youseikouza](https://goo.gl/3iVdZD), Naohiro Takahahsi, Hanbit Media, ISBN 978-89-6848-055-3.  
+
