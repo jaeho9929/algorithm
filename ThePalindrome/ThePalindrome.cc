@@ -39,28 +39,28 @@ class ThePalindrome{
     public:
         int find(string s)
         {
-            int size = s.length();
-            int fromleft = 0;
-            int fromright = size - 1;
             int ans = s.length();
+            int size = s.length();
+            string reversed(s);
+            reverse(reversed.begin(), reversed.end());
 
             for(int i = 0; i < size; i++){
-                if((fromleft) == (fromright))
-                    return ans;
-                if(s[fromleft] != s[fromright]){
-                    //cout << "The LEFT" << s[fromleft] << endl;
-                    fromleft++;
-                    ans++;
-                }else if(s[fromleft] == s[fromright]){
-                    fromleft++;
-                    ans++;
-                }else{
-                    fromleft++;
-                    fromright--;
+                int k = i;
+                bool flag = true;
+                for(int j = 0; j < size; j++){
+                    //cout << "CMP STRS : " << s[k] << " and " << reversed[j] << endl;
+                    //cout << "Index : " << k << " and " << j <<endl;
+                    if(k >= (size - 1))
+                        return ans;
+                    if(s[k] != reversed[j]){
+                        flag = false;
+                        break;
+                    }else{
+                        k++;
+                    }
                 }
+                if(!flag)   ans++;
             }
-
-            return ans;
         }
 
         int find2(string s)
@@ -68,6 +68,8 @@ class ThePalindrome{
             for(int i = s.size(); ; i++){
                 bool flag = true;
                 for(int j = 0; j < s.size(); j++){
+                    //cout << "Index : " << j << " and " << i - j - 1 << endl;
+                    //cout << "TEST VALUE : " << s[j] << " And " << s[i-j-1] << endl;
                     if((i - j - 1) < s.size() && s[j] != s[i -j -1]){
                         flag = false;
                         break;
@@ -76,8 +78,7 @@ class ThePalindrome{
                 if(flag)    return i;
             }
         }
-        
-        
+
 };
 
 int main(void)
@@ -98,12 +99,10 @@ int main(void)
     while(cc--){
         /* get test parameters */
         cin >> strings;
-        //__TIMEMEASURE_WITHRETURN(returns , solver.find2, strings);
-        //__TIMEMEASURE_WITHRETURN(returns , solver.find, strings);
         cout << "CASE \"" << cc << "\"" << endl;
         __TIMEMEASURE(solver.find, strings);
         __TIMEMEASURE(solver.find2, strings);
-
+ 
 //        cout << "CASE \"" << cc << "\"" << endl;
 //        cout << returns << endl;
 //        for(int i = 0; i < returns.size(); i++)
