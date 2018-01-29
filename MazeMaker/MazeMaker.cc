@@ -36,11 +36,6 @@ using namespace std;
     duration = std::chrono::duration_cast<std::chrono::microseconds>(te - ts).count();    \
     std::cout << "Execution time of "<< #func " " << "; " << duration << "us" << std::endl;
 
-bool grid[100][100] = {false};
-int vx[] = {1, -1, 0, 0};
-int vy[] = {0, 0, 1, -1};
-double prob[4];
-
 class MazeMaker{
 
     public:
@@ -52,7 +47,7 @@ class MazeMaker{
             int board[50][50];
 
             for(int i = 0; i < height; i++){
-                for(int j = 0; j < height; j++){
+                for(int j = 0; j < width; j++){
                     board[i][j] = -1;
                 }
             }
@@ -64,10 +59,43 @@ class MazeMaker{
             queueY.push(startRow);
 
             while(queueX.size() > 0){
+                
                 int x = queueX.front();
                 int y = queueY.front();
+                queueX.pop();
+                queueY.pop();
+
+                for(int i = 0; i < moveRow.size(); i++){
+                    int nextX = x + moveCol[i];
+                    int nextY = y + moveRow[i];
+
+                    if((0 <= nextX) && (nextX < width) 
+                        && (0 <= nextY) && (nextY < height) 
+                        && (board[nextY][nextX] == -1) 
+                        && (maze[nextY].substr(nextX,1) == ".")){
+                        board[nextY][nextX] = board[y][x] + 1;
+                        queueX.push(nextX);
+                        queueY.push(nextY);
+                    }
+                }
             }
-            
+
+            for(int i = 0; i < height; i++){
+                for(int j = 0; j < width; j++){
+                    cout << board[i][j] << " ";
+                }
+                cout << endl;
+            }
+
+            for(int i = 0; i < height; i++){
+                for(int j = 0; j < height; j++){
+                    if(maze[i].substr(j,1) == "." && board[i][j] == -1)
+                        return -1;
+
+                    max = std::max(max, board[i][j]);
+                }
+            }
+            return max;
         }
 };
 
@@ -111,7 +139,8 @@ int main(void)
         }
 
         cout << "CASE \"" << cc << "\"" << endl;
-        //__TIMEMEASURE(solver.getProbability, n, east, west, south, north);
+//        int longestPath(vector<string> maze, int startRow, int startCol, vector<int> moveRow, vector<int> moveCol)
+        __TIMEMEASURE(solver.longestPath, maze, startRow, startCol, moveRow, moveCol);
  
 //        cout << "CASE \"" << cc << "\"" << endl;
 //        cout << returns << endl;
