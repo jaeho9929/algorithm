@@ -80,15 +80,15 @@ class MazeMaker{
                 }
             }
 
-            for(int i = 0; i < height; i++){
-                for(int j = 0; j < width; j++){
-                    cout << board[i][j] << " ";
-                }
-                cout << endl;
-            }
+//            for(int i = 0; i < height; i++){
+//                for(int j = 0; j < width; j++){
+//                    cout << board[i][j] << " ";
+//                }
+//                cout << endl;
+//            }
 
             for(int i = 0; i < height; i++){
-                for(int j = 0; j < height; j++){
+                for(int j = 0; j < width; j++){
                     if(maze[i].substr(j,1) == "." && board[i][j] == -1)
                         return -1;
 
