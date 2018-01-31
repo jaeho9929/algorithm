@@ -63,6 +63,51 @@ class BadNeighbors{
             delete [] dp;
             return ans;
         }
+
+        int maxDonations2(vector<int> donations)
+        {
+            int N = donations.size();
+            int *dp = new int[N];
+            int ans0;
+            int ans1;
+            int ans;
+
+            /* Start From index 0 */
+            for(int i = 0; i < N-1; i++){
+                if((i == 0) | (i == 1)){
+                    dp[i] = donations[i];
+                    continue;
+                }
+                if(i == 2){
+                    dp[i] = donations[i] + donations[0];
+                    continue;
+                }
+                dp[i] = donations[i] + max(dp[i-2], dp[i-3]);
+            }
+            ans0 = dp[N-2];
+
+            /* Start From index 1 */
+            for(int i = 0; i < N; i++){
+                if(i == 0){
+                    dp[i] = 0;
+                    continue;
+                }
+                if((i == 1) | (i == 2)){
+                    dp[i] = donations[i];
+                    continue;
+                }
+                if(i == 3){
+                    dp[i] = donations[i] + donations[1];
+                    continue;
+                }
+                dp[i] = donations[i] + max(dp[i-3], dp[i-2]);
+                //cout << dp[i] <<endl;
+            }
+            ans1 = dp[N-1];
+
+            delete [] dp;
+            return max(ans0, ans1);
+        }
 };
 
 int main(void)
@@ -89,6 +134,7 @@ int main(void)
             donations.push_back(donation);
         }
         __TIMEMEASURE(solver.maxDonations, donations);
+        __TIMEMEASURE(solver.maxDonations2, donations);
         donations.clear();
     }
 
