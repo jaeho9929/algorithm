@@ -80,8 +80,8 @@ class InfinitySequence2{
         long long recursion2(long n, int p, int q, int x, int y)
         {
             if(n <= 0)  return 1;
-            if(dp2[n] != 0) return dp[n];
-            return dp[n] = (recursion2(n / p - x, p, q, x, y) + recursion2(n / q - y, p, q, x ,y));
+            if(dp2[n] != 0) return dp2[n];
+            return dp2[n] = (recursion2(n / p - x, p, q, x, y) + recursion2(n / q - y, p, q, x ,y));
         }
 
         long long calc4(long n, int p, int q, int x ,int y)
