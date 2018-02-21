@@ -67,6 +67,33 @@ class FENCE{
 
             return ret;
         }
+
+        int binarySearch(vector<int> fences, int left, int right)
+        {
+            if(left == right)   return fences[left];
+            int mid = (left + right) / 2;
+            //cout << "LEFT : " << left << " RIGHT : " << right << endl;
+            //cout << "MID NUMBER : " << mid << endl;
+
+            int ret = max(binarySearch(fences, left, mid), binarySearch(fences, mid + 1, right));
+            int lo = mid, hi = mid + 1;
+            int height = min(fences[lo], fences[hi]);
+            ret = max(ret, height * 2);
+
+            while(left < lo || hi < right){
+                //cout << "LOW : " << lo << " HIGH : " << hi << endl;
+                if(hi < right && (lo == left || fences[lo - 1] < fences[hi + 1])){
+                    ++hi;
+                    height = min(height, fences[hi]);
+                }else{
+                    --lo;
+                    height = min(height, fences[lo]);
+                }
+                ret = max(ret, height * (hi - lo + 1));
+                //cout << "RETURN VALUE : " << ret << endl;
+            }
+            return ret;
+        }
         
 };
 
@@ -93,6 +120,7 @@ int main(void)
             fences.push_back(fence);
         }
         __TIMEMEASURE_WITHRETURN(result, solver.exahustiveSearch, fences);
+        __TIMEMEASURE_WITHRETURN(result, solver.binarySearch, fences, 0, fences.size());
         cout << result << endl;
         fences.clear();
     }
